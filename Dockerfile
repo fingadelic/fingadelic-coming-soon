@@ -1,11 +1,11 @@
-# Use a lightweight web server image
+# Use the lightweight Nginx image
 FROM nginx:alpine
 
-# Copy your HTML file into the server's default folder
+# Copy your HTML files to the web server
 COPY . /usr/share/nginx/html
 
-# COPY custom configuration to change port to 3000
+# FORCE Nginx to listen on port 3000 instead of 80
 RUN sed -i 's/listen       80;/listen       3000;/' /etc/nginx/conf.d/default.conf
 
-# Expose port 3000
+# Tell Docker we are using port 3000
 EXPOSE 3000
