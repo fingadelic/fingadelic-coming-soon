@@ -1,0 +1,21 @@
+# 1. Use the standard lightweight Nginx image
+FROM nginx:alpine
+
+# 2. Copy your website files to the server
+COPY . /usr/share/nginx/html
+
+# 3. Create a custom Nginx config that listens on Port 3000
+RUN echo 'server { \
+    listen 3000; \
+    location / { \
+        root /usr/share/nginx/html; \
+        index index.html index.htm; \
+        try_files $uri $uri/ /index.html; \
+    } \
+}' > /etc/nginx/conf.d/default.conf
+
+# 4. Tell Docker we are using Port 3000
+EXPOSE 3000
+
+# 5. Start Nginx
+CMD ["nginx", "-g", "daemon off;"]
